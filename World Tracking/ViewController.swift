@@ -13,11 +13,13 @@ import ARKit
 class ViewController: UIViewController {
 
     @IBOutlet var sceneView: ARSCNView!
+    let configuration = ARWorldTrackingConfiguration()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
+        sceneView.autoenablesDefaultLighting = true
 
         // Set the view's delegate
         sceneView.delegate = self
@@ -35,9 +37,6 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-
         // Run the view's session
         sceneView.session.run(configuration)
     }
@@ -53,6 +52,41 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
+
+    @IBAction func addButtonAction(_ sender: Any) {
+
+        let node = SCNNode()
+        node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.03)
+        node.geometry?.firstMaterial?.specular.contents = UIColor.white
+        node.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
+
+        let x = randonNumbers(firstNumber: -0.3, secondNumber: 0.3)
+        let y = randonNumbers(firstNumber: -0.3, secondNumber: 0.3)
+        let z = randonNumbers(firstNumber: -0.3, secondNumber: 0.3)
+
+        node.position = SCNVector3(x, y, z)
+
+        sceneView.scene.rootNode.addChildNode(node)
+    }
+
+    @IBAction func resetButtonAction(_ sender: Any) {
+        restartSession()
+    }
+
+    private func restartSession() {
+        sceneView.session.pause()
+        sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            node.removeFromParentNode()
+        }
+
+        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+    }
+
+    private func randonNumbers(firstNumber: CGFloat, secondNumber: CGFloat) -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNumber - secondNumber) + min(firstNumber, secondNumber)
+    }
+    
+
 }
 
 // MARK: - ARSCNViewDelegate

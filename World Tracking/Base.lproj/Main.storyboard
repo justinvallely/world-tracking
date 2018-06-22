@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,12 +14,50 @@
         <scene sceneID="tXr-a1-R10">
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="World_Tracking" customModuleProvider="target" sceneMemberID="viewController">
-                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="M33-So-hkx">
+                    <view key="view" contentMode="scaleToFill" id="4Kd-oA-wfo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </arscnView>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="So5-ai-1IY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-ih-32H">
+                                <rect key="frame" x="36" y="567" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="R1t-OD-mHc"/>
+                                    <constraint firstAttribute="height" constant="80" id="j4b-xh-2en"/>
+                                </constraints>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addButtonAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="18F-vh-Czk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNE-HZ-nd9">
+                                <rect key="frame" x="259" y="567" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="w2n-YZ-udt"/>
+                                    <constraint firstAttribute="height" constant="80" id="wnd-Oc-dC2"/>
+                                </constraints>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="resetButtonAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="xYq-D0-viE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="zNE-HZ-nd9" secondAttribute="bottom" constant="20" id="3dq-Er-ZAB"/>
+                            <constraint firstAttribute="bottom" secondItem="So5-ai-1IY" secondAttribute="bottom" id="Atp-4H-gyy"/>
+                            <constraint firstItem="So5-ai-1IY" firstAttribute="top" secondItem="4Kd-oA-wfo" secondAttribute="top" id="LFg-IJ-whT"/>
+                            <constraint firstItem="zNE-HZ-nd9" firstAttribute="trailing" secondItem="4Kd-oA-wfo" secondAttribute="trailingMargin" constant="-20" id="Nbh-gu-kyO"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="eZG-ih-32H" secondAttribute="bottom" constant="20" id="O6L-e0-y8O"/>
+                            <constraint firstItem="eZG-ih-32H" firstAttribute="leading" secondItem="4Kd-oA-wfo" secondAttribute="leadingMargin" constant="20" id="TNM-fi-zRC"/>
+                            <constraint firstAttribute="trailing" secondItem="So5-ai-1IY" secondAttribute="trailing" id="UTQ-qQ-tTy"/>
+                            <constraint firstItem="So5-ai-1IY" firstAttribute="leading" secondItem="4Kd-oA-wfo" secondAttribute="leading" id="jEV-HR-D6K"/>
+                        </constraints>
+                    </view>
                     <connections>
-                        <outlet property="sceneView" destination="M33-So-hkx" id="PDv-iz-ZUy"/>
+                        <outlet property="sceneView" destination="So5-ai-1IY" id="c4F-IN-Ie9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
