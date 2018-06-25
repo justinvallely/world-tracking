@@ -27,11 +27,11 @@ class ViewController: UIViewController {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
 
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-
-        // Set the scene to the view
-        sceneView.scene = scene
+//        // Create a new scene
+//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+//
+//        // Set the scene to the view
+//        sceneView.scene = scene
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,18 +55,24 @@ class ViewController: UIViewController {
 
     @IBAction func addButtonAction(_ sender: Any) {
 
-        let node = SCNNode()
-        node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.03)
-        node.geometry?.firstMaterial?.specular.contents = UIColor.white
-        node.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
+        let pyramidNode = SCNNode(geometry: SCNPyramid(width: 0.1, height: 0.1, length: 0.1))
+        pyramidNode.geometry?.firstMaterial?.specular.contents = UIColor.white
+        pyramidNode.geometry?.firstMaterial?.diffuse.contents = UIColor.brown
+        pyramidNode.position = SCNVector3(0, 0, -0.3)
 
-        let x = randonNumbers(firstNumber: -0.3, secondNumber: 0.3)
-        let y = randonNumbers(firstNumber: -0.3, secondNumber: 0.3)
-        let z = randonNumbers(firstNumber: -0.3, secondNumber: 0.3)
+        let cubeNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+        cubeNode.geometry?.firstMaterial?.specular.contents = UIColor.white
+        cubeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.gray
+        cubeNode.position = SCNVector3(0, -0.05, 0)
 
-        node.position = SCNVector3(x, y, z)
+        let planeNode = SCNNode(geometry: SCNPlane(width: 0.03, height: 0.06))
+        planeNode.geometry?.firstMaterial?.specular.contents = UIColor.white
+        planeNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        planeNode.position = SCNVector3(0, -0.02, 0.053)
 
-        sceneView.scene.rootNode.addChildNode(node)
+        sceneView.scene.rootNode.addChildNode(pyramidNode)
+        pyramidNode.addChildNode(cubeNode)
+        cubeNode.addChildNode(planeNode)
     }
 
     @IBAction func resetButtonAction(_ sender: Any) {
@@ -85,33 +91,9 @@ class ViewController: UIViewController {
     private func randonNumbers(firstNumber: CGFloat, secondNumber: CGFloat) -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNumber - secondNumber) + min(firstNumber, secondNumber)
     }
-    
-
 }
 
 // MARK: - ARSCNViewDelegate
 extension ViewController: ARSCNViewDelegate {
 
-    // Override to create and configure nodes for anchors added to the view's session.
-//    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-//        let node = SCNNode()
-//     
-//        return node
-//    }
-
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
-    }
 }
